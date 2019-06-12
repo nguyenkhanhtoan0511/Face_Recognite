@@ -1,0 +1,13 @@
+.\dataset\test_set\Phuc\16.jpg
+.\dataset\test_set\Phuc\17.jpg
+.\dataset\test_set\Phuc\19.jpg
+.\dataset\test_set\Phuc\20.jpg
+.\dataset\test_set\Phuong\17.jpg
+.\dataset\test_set\Phuong\18.jpg
+.\dataset\test_set\Phuong\19.jpg
+.\dataset\test_set\Toan\16.jpg
+.\dataset\test_set\Toan\17.jpg
+.\dataset\test_set\Toan\19.jpg
+.\dataset\test_set\Toan\20.jpg
+
+

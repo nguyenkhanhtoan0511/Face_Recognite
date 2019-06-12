@@ -1,0 +1,1 @@
+Chạy file predict.py để dự đoán
