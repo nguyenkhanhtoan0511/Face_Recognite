@@ -1,7 +1,8 @@
 # Xác nhận người trong ảnh có phải là người cần nhận diện hay không ?
 import numpy as np
 import os
-# from sklearn.neighbors import KDTree
+from sklearn.neighbors import KDTree
+
  # Gọi lớp extrac_features.py để trích xuất đặc trưng từ face
 from keras.preprocessing import image
 from keras.applications.vgg16 import VGG16
@@ -111,21 +112,24 @@ def predict_image(path):
             elif  result[0] == 2:
                 name = "Toan"
         image_copy = draw_rectange(box_new, image_result, name)
-        cv2.imshow('Face recognition', image_copy)
-        cv2.imwrite('./results/kq.jpg',image_copy )
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+  #      cv2.imshow('Face recognition', image_copy)
+ #       cv2.imwrite('./results/kq.jpg',image_copy )
+ #       cv2.waitKey(0)
+#        cv2.destroyAllWindows()
     else:
         print('no face')
         image_copy = image_result.copy()
-        cv2.putText(image_copy, 'No face detection', (10, 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
-        cv2.imshow('Face recognition', image_copy)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+    return image_copy
+#        cv2.putText(image_copy, 'No face detection', (10, 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
+#        cv2.imshow('Face recognition', image_copy)
+#        cv2.waitKey(0)
+#        cv2.destroyAllWindows()
 
-def main():
-    path = 'dataset/predict/t4.jpg' #  update there
-    predict_image(path)
+#def main():
+#    path = 'dataset/predict/t4.jpg' #  update there
+#    predict_image(path)
 
-if __name__=='__main__':
-    main()
+#if __name__=='__main__':
+ #   main()
+
+
