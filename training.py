@@ -1,9 +1,7 @@
-# training with 3 class that Phuc, Phuong and Toan
 from keras_vggface.vggface import VGGFace
 from keras.layers import Flatten, Dense, Input,Dropout, Conv2D, MaxPool2D
 from keras.models import Model
 from keras import models
-
 from keras.preprocessing.image import ImageDataGenerator
 from keras import optimizers
 import matplotlib.pyplot as plt
@@ -18,12 +16,11 @@ vgg_model = VGGFace(weights='vggface', model='vgg16', include_top=False, input_s
 
 # list all the layer names which are in the model.
 layer_names = [layer.name for layer in vgg_model.layers]
-
+print("layers_name: ",layer_names)
 # Freeze the layers except the last 4 layers
 #for layer in vgg_model.layers[:4]:
 #    layer.trainable = False
 # Check the trainable status of the individual layers
-
 for layer in vgg_model.layers:
     print(layer, layer.trainable)
     
@@ -38,9 +35,6 @@ model.add(Flatten())
 model.add(Dense(2048, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(3, activation='softmax'))
-
-
-# Show a summary of the model. Check the number of trainable parameters
 model.summary()
 
 from keras import metrics
@@ -64,8 +58,6 @@ test_datagen = ImageDataGenerator(
         zoom_range=0.2,
         horizontal_flip=True)
 
-
-
 training_set = train_datagen.flow_from_directory(
         'dataset/train_set',
         target_size=(width_img, height_img),
@@ -80,13 +72,12 @@ test_set = test_datagen.flow_from_directory(
 
 history = model.fit_generator(
         training_set,
-        samples_per_epoch=32/3,
-        epochs=60, # number of loop
+        steps_per_epoch=11,
         validation_data=test_set,
-        nb_val_samples=10)
+        validation_steps=10,
+        epochs=90, # number of loop
+        )
 
-#%%
-#save model
 model.save('model.h5')
 print("Model saved !!")
 classes = training_set.class_indices
