@@ -52,8 +52,8 @@ def draw_rectange(box_new,img, text):
     (x,y,w,h) = face_utils.rect_to_bb(box_new)
     #draw on new image
     image_copy = img.copy()
-    cv2.rectangle(image_copy, (x,y), (x+w, y+h), (0,0,255), 1)
-    cv2.putText(image_copy, text, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
+    cv2.rectangle(image_copy, (x,y), (x+w, y+h), (0,0,255), 2)
+    cv2.putText(image_copy, text, (x, y), cv2.FONT_HERSHEY_PLAIN, 2.5, (0, 255, 0), 2)
     return image_copy
 
 def save_feature(save_path, feature):    
