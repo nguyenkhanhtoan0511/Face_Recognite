@@ -14,6 +14,7 @@ from mtcnn.mtcnn import MTCNN
 import dlib
 from imutils.face_utils import FaceAligner
 from imutils import face_utils
+from keras import backend as K
 import pickle
 
 def load_features(src):
@@ -62,6 +63,7 @@ def save_feature(save_path, feature):
 
 def predict_image(path):
     # load KDtree
+    K.clear_session()
     file = open('kdtree.pickle', 'rb')
     kdt = pickle.load(file)
     file.close()
@@ -119,6 +121,7 @@ def predict_image(path):
     else:
         print('no face')
         image_copy = image_result.copy()
+    K.clear_session()
     return image_copy
 #        cv2.putText(image_copy, 'No face detection', (10, 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
 #        cv2.imshow('Face recognition', image_copy)
