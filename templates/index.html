@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Face detection demo</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+
+<div class = "container">
+
+    <div class = "starter-template" >
+        <h1>Đồ án nhận diện khuôn mặt</h1>
+
+
+    </div>
+
+    <table class="table ">
+        <h2>Thành viên nhóm:</h2>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Họ và tên</th>
+                <th>MSSV</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td >Phạm Tuấn Phương</td>
+                <td>15520666</td>
+
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td >Nguyễn Hoàng Phúc</td>
+                <td>15520644</td>
+
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td >Nguyễn Khánh Toàn</td>
+                <td>15520902</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+<header class="navbar">
+    <form action="/upload" method="post" enctype="multipart/form-data" class="md-form" >
+        <div align="center">
+            <label class="btn btn-default btn-file">
+                <i class="fa fa-file-image-o">
+                Browse <input type="file" name="image" style="display: none;">
+                </i>
+            </label>
+            <input type="submit" value="Nhận diện hình ảnh" class="btn btn-primary" >
+        </div>
+    </form>
+
+
+</header>
+
+
+<div class="text-center">""
+    {% if init %}
+        {% if faceDetected %}
+            <div class="alert alert-success" style="margin-top:18px;">
+                <strong>Vâng!</strong> Đã nhận diện xong!
+            </div>
+            {% if image_to_show %}
+                <div>
+                    <img src="{{image_to_show}}" alt="result"  width="360px" heigth="419px">
+                </div>
+            {% endif %}
+
+        {% else %}
+            <div class="alert alert-danger" style="margin-top:18px;">
+                <strong>Không!</strong> Không nhận diện được
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+</body>
+</html>
