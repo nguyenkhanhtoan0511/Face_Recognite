@@ -19,6 +19,7 @@ import warnings
 from flask import Flask, render_template, request
 import base64
 import predict
+from PIL import Image
 
 
 app = Flask(__name__)
@@ -36,13 +37,14 @@ def upload_file():
     file = request.files['image']
     
     # Save file
-    #filename = 'static/' + file.filename
-    #file.save(filename)
+
 
     # Read image
     image = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
-    cv2.imwrite("img.jpg",image)
-    path='D:/CS332.J11\FaceRecognite\Origin\img.jpg'
+    filename = 'dataset/upload/'+file.filename 
+    #image.save(filename)
+    cv2.imwrite(filename,image)
+    path='dataset/upload/'+file.filename
     image_result=predict.predict_image(path)
     
     image_content = cv2.imencode('.jpg', image_result)[1].tostring()
