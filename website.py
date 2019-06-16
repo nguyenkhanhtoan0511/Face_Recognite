@@ -2,7 +2,6 @@
 import numpy as np
 import os
 from sklearn.neighbors import KDTree
-
  # Gọi lớp extrac_features.py để trích xuất đặc trưng từ face
 from keras.preprocessing import image
 from keras.applications.vgg16 import VGG16
@@ -21,9 +20,7 @@ import base64
 import predict
 from PIL import Image
 
-
 app = Flask(__name__)
-
 UPLOAD_FOLDER = os.path.basename('uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -35,10 +32,6 @@ def start_page():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     file = request.files['image']
-    
-    # Save file
-
-
     # Read image
     image = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
     filename = 'dataset/upload/'+file.filename 
@@ -46,15 +39,10 @@ def upload_file():
     cv2.imwrite(filename,image)
     path='dataset/upload/'+file.filename
     image_result=predict.predict_image(path)
-    
     image_content = cv2.imencode('.jpg', image_result)[1].tostring()
     encoded_image = base64.encodestring(image_content)
     to_send = 'data:image/jpg;base64, ' + str(encoded_image, 'utf-8')
-
     return render_template('index.html', faceDetected=1, num_faces=1, image_to_show=to_send, init=True)
-
-
-
 
 if __name__ == "__main__":
     # Only for debugging while developing

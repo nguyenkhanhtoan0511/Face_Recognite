@@ -128,11 +128,11 @@ def predict_image(path):
 #        cv2.waitKey(0)
 #        cv2.destroyAllWindows()
 
-#def main():
+# def main():
 #    path = 'dataset/predict/t4.jpg' #  update there
 #    predict_image(path)
 
-#if __name__=='__main__':
- #   main()
+# if __name__=='__main__':
+#    main()
 
 
