@@ -1,4 +1,5 @@
 model.h5
-
+kdtree.pickles
 dataset/
 model/
+features/
