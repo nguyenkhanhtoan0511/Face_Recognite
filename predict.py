@@ -1,4 +1,10 @@
-# Xác nhận người trong ảnh có phải là người cần nhận diện hay không ?
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jun 15 18:07:45 2019
+
+@author: Administrator's PC
+"""
+
 import numpy as np
 import os
 from sklearn.neighbors import KDTree
@@ -14,8 +20,9 @@ from mtcnn.mtcnn import MTCNN
 import dlib
 from imutils.face_utils import FaceAligner
 from imutils import face_utils
-from keras import backend as K
 import pickle
+from keras import backend as K
+
 
 def load_features(src):
     print("[+] Load data....")
@@ -41,37 +48,43 @@ def detect_face(path):
     print(np.array(faces).shape)
     if len(faces) == 0  :
         return None, None, img
-    box = faces[0]['box'] # only 1 face
+    box_news=[]
+    faceAligneds=[]
+    for i in range(0,len(faces)):
+        box = faces[i]['box'] # only 1 face
     #convert dist to rtype: dlib.rectangle
-    box_new = dlib.rectangle(box[0], box[1], box[0]+box[2], box[1]+box[3])
+        box_new = dlib.rectangle(box[0], box[1], box[0]+box[2], box[1]+box[3])
+        box_news.append(box_new)
     #face alignment
-    faceAligned = fa.align(img, gray_image,box_new)
-    return faceAligned, box_new, img
+        faceAligned = fa.align(img, gray_image,box_new)
+        faceAligneds.append(faceAligned)
+    return faceAligneds, box_news, img
     
 def draw_rectange(box_new,img, text):
     (x,y,w,h) = face_utils.rect_to_bb(box_new)
     #draw on new image
     image_copy = img.copy()
-    cv2.rectangle(image_copy, (x,y), (x+w, y+h), (0,0,255), 2)
-    cv2.putText(image_copy, text, (x, y), cv2.FONT_HERSHEY_PLAIN, 2.5, (0, 255, 0), 2)
+    cv2.rectangle(image_copy, (x,y), (x+w, y+h), (0,0,255), 1)
+    cv2.putText(image_copy, text, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
     return image_copy
 
 def save_feature(save_path, feature):    
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
         print("[+]Save extracted feature to file: ", save_path)
         np.save(save_path, feature)
-
 def predict_image(path):
     # load KDtree
     K.clear_session()
     file = open('kdtree.pickle', 'rb')
     kdt = pickle.load(file)
     file.close()
-    faceAligned, box_new, image_result = detect_face(path)
-    if faceAligned is not None:
+    faceAligneds, box_news, image_result = detect_face(path)
+    if faceAligneds is None:
+        return image_result
+    for i in range(0,len(faceAligneds)):
         # So khớp khuôn mặt 
         save_face = './results/face.jpg'
-        cv2.imwrite(save_face,faceAligned) 
+        cv2.imwrite(save_face,faceAligneds[i]) 
         ImageFile.LOAD_TRUNCATED_IMAGES=True
         print("[+] Setup model")
         base_model = VGG16(weights='imagenet', include_top=True)
@@ -91,21 +104,21 @@ def predict_image(path):
             img_data = preprocess_input(img_data)
             print("[+] Extract feature from image : ", img_path)
             feature = model_feature.predict(img_data)
-            save_feature(save_path_feature, feature)
+            #save_feature(save_path_feature, feature)
         # match between one indiced face and all faces in  data set
-        data_predict = load_features(path_feature)
+        data_predict = feature#load_features(path_feature)
         X_pre = np.array(data_predict)
         distance, indices = kdt.query(X_pre, k=4, return_distance=True)
         name = "Unknown"
         print('distance: ',distance)
-        if distance[0,0] <= 50 :
+        if distance[0,0] <= 46 :
             print('face detected....')
             # part 3 : making new predictions
             from keras.models import load_model
             import numpy as np
             # identical to the previous one
             model = load_model('model.h5')
-            test_image = np.expand_dims(faceAligned, axis=0)
+            test_image = np.expand_dims(faceAligneds[i], axis=0)
             result = model.predict_classes(test_image)
             if result[0] == 0:
                 name = "Phuc"
@@ -113,26 +126,25 @@ def predict_image(path):
                 name = "Phuong"
             elif  result[0] == 2:
                 name = "Toan"
-        image_copy = draw_rectange(box_new, image_result, name)
-  #      cv2.imshow('Face recognition', image_copy)
- #       cv2.imwrite('./results/kq.jpg',image_copy )
- #       cv2.waitKey(0)
-#        cv2.destroyAllWindows()
-    else:
-        print('no face')
-        image_copy = image_result.copy()
+        image_result = draw_rectange(box_news[i], image_result, name)
+        #cv2.imshow('Face recognition', image_copy)
+        cv2.imwrite(path,image_result )
+        #cv2.waitKey(0)
+        #cv2.destroyAllWindows()
     K.clear_session()
-    return image_copy
+    #cv2.imshow('Face recognition', image_result)
+    #cv2.imwrite('./results/kq.jpg',image_copy )
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
+    return image_result
 #        cv2.putText(image_copy, 'No face detection', (10, 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
 #        cv2.imshow('Face recognition', image_copy)
 #        cv2.waitKey(0)
 #        cv2.destroyAllWindows()
 
-def main():
-   path = 'dataset/predict/t4.jpg' #  update there
-   predict_image(path)
+#def main():
+#    path = 'dataset/predict/t6.jpg' #  update there
+#    predict_image(path)
 
-if __name__=='__main__':
-   main()
-
-
+#if __name__=='__main__':
+#    main()
