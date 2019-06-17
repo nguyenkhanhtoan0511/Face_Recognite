@@ -34,7 +34,7 @@ def upload_file():
     file = request.files['image']
     # Read image
     image = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
-    filename = 'dataset/upload/'+file.filename 
+    filename = 'dataset/predict/'+file.filename 
     #image.save(filename)
     cv2.imwrite(filename,image)
     path='dataset/predict/'+file.filename
