@@ -21,7 +21,7 @@ import predict
 from PIL import Image
 
 app = Flask(__name__)
-UPLOAD_FOLDER = os.path.basename('uploads')
+UPLOAD_FOLDER = os.path.basename('predict')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
