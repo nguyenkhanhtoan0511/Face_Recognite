@@ -8,7 +8,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+  <style type="text/css" media="screen">
+      .starter-template{
+        background: #DAD6D6;
+        margin: 0px 0px 30px;
+        border: solid 1px #e6e6e6;
+        box-sizing: border-box;
+        padding-left: 20px;
+        box-shadow: 0px 2px 5px rgba(0,0,0,.3);
+      }
+      body{
+        background-image: linear-gradient(to right, #93278F , #00A99D);
+      }
+  </style>
 
 </head>
 
@@ -71,6 +83,15 @@
             <div class="alert alert-success" style="margin-top:18px;">
                 <strong>Vâng!</strong> Đã nhận diện xong!
             </div>
+            {% if name=='Unknown' %}
+                  <div>
+                     <h3>Không xác định được danh tính </h3>
+                  </div>
+                {% else %}
+                  <div>
+                     <strong>Đây là </strong>{{name}}
+                  </div>
+                {% endif %}
             {% if image_to_show %}
                 <div>
                     <img src="{{image_to_show}}" alt="result"  width="360px" heigth="419px">
