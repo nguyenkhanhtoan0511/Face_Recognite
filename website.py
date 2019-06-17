@@ -42,7 +42,7 @@ def upload_file():
     image_content = cv2.imencode('.jpg', image_result)[1].tostring()
     encoded_image = base64.encodestring(image_content)
     to_send = 'data:image/jpg;base64, ' + str(encoded_image, 'utf-8')
-    return render_template('index.html', faceDetected=1, num_faces=1, image_to_show=to_send, init=True,,name=name)
+    return render_template('index.html', faceDetected=1, num_faces=1, image_to_show=to_send, init=True,name=name)
 
 if __name__ == "__main__":
     # Only for debugging while developing
