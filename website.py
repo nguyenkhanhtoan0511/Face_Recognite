@@ -37,7 +37,7 @@ def upload_file():
     filename = 'dataset/upload/'+file.filename 
     #image.save(filename)
     cv2.imwrite(filename,image)
-    path='dataset/upload/'+file.filename
+    path='dataset/predict/'+file.filename
     image_result=predict.predict_image(path)
     image_content = cv2.imencode('.jpg', image_result)[1].tostring()
     encoded_image = base64.encodestring(image_content)
