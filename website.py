@@ -38,11 +38,11 @@ def upload_file():
     #image.save(filename)
     cv2.imwrite(filename,image)
     path='dataset/predict/'+file.filename
-    image_result=predict.predict_image(path)
+    image_result,name=predict.predict_image(path)
     image_content = cv2.imencode('.jpg', image_result)[1].tostring()
     encoded_image = base64.encodestring(image_content)
     to_send = 'data:image/jpg;base64, ' + str(encoded_image, 'utf-8')
-    return render_template('index.html', faceDetected=1, num_faces=1, image_to_show=to_send, init=True)
+    return render_template('index.html', faceDetected=1, num_faces=1, image_to_show=to_send, init=True,,name=name)
 
 if __name__ == "__main__":
     # Only for debugging while developing
