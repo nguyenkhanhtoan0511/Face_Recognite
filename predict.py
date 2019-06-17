@@ -136,7 +136,7 @@ def predict_image(path):
     #cv2.imwrite('./results/kq.jpg',image_copy )
     #cv2.waitKey(0)
     #cv2.destroyAllWindows()
-    return image_result
+    return image_result,name
 #        cv2.putText(image_copy, 'No face detection', (10, 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
 #        cv2.imshow('Face recognition', image_copy)
 #        cv2.waitKey(0)
