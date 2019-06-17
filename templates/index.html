@@ -20,7 +20,9 @@
       body{
         background-image: linear-gradient(to right, #93278F , #00A99D);
       }
-
+      h3{
+        color: #ffffff;
+      }
   </style>
 
 </head>
@@ -85,13 +87,13 @@
                 <strong>Vâng!</strong> Đã nhận diện xong!
             </div>
             {% if name=='Unknown' %}
-                  <div>
-                     <h3>Không xác định được danh tính </h3>
-                  </div>
-                {% else %}
-                  <div>
-                     <strong>Đây là </strong>{{name}}
-                  </div>
+                 <div>
+                    <h3>Không xác định được danh tính </h3>
+                 </div>
+            {% else %}
+                 <div>
+                   <h3>Đây là {{name}}</h3>
+                 </div>
                 {% endif %}
             {% if image_to_show %}
                 <div>
