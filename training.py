@@ -17,10 +17,6 @@ vgg_model = VGGFace(weights='vggface', model='vgg16', include_top=False, input_s
 # list all the layer names which are in the model.
 layer_names = [layer.name for layer in vgg_model.layers]
 print("layers_name: ",layer_names)
-# Freeze the layers except the last 4 layers
-#for layer in vgg_model.layers[:4]:
-#    layer.trainable = False
-# Check the trainable status of the individual layers
 for layer in vgg_model.layers:
     print(layer, layer.trainable)
     
