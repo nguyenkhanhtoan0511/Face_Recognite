@@ -51,8 +51,7 @@ def detect_face(path):
     box_news=[]
     faceAligneds=[]
     for i in range(0,len(faces)):
-        box = faces[i]['box'] # only 1 face
-    #convert dist to rtype: dlib.rectangle
+        box = faces[i]['box'] 
         box_new = dlib.rectangle(box[0], box[1], box[0]+box[2], box[1]+box[3])
         box_news.append(box_new)
     #face alignment
@@ -108,7 +107,7 @@ def predict_image(path):
         # match between one indiced face and all faces in  data set
         data_predict = feature#load_features(path_feature)
         X_pre = np.array(data_predict)
-        distance, indices = kdt.query(X_pre, k=4, return_distance=True)
+        distance = kdt.query(X_pre, k=4, return_distance=True)
         name = "Unknown"
         print('distance: ',distance)
         if distance[0,0] <= 46 :
