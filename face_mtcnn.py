@@ -20,22 +20,16 @@ def extract_feature(path):
     for f in files:
         image = cv2.imread("./"+path+"/"+f)
         gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
-        # if result is empty then we try to replace size image
         retcs = detector.detect_faces(image)
         if len(retcs) == 1 :#only one face
             box = retcs[0]['box']
-            #convert dist to rtype : dlib.rectangle
             box_new = dlib.rectangle(box[0],box[1], box[0]+box[2], box[1]+box[3])
-            #face alignment 
             faceAligned = fa.align(image, gray_image, box_new)    
-            # show image
             cv2.imshow(f, faceAligned)   
             cv2.imwrite(f,faceAligned)
             (x,y,w,h) = face_utils.rect_to_bb(box_new)
             cv2.rectangle(image, (x, y), (x+w, y+h), (0,0,255), 1)
         else:
-            #delete file in folder
-            # os.remove("./"+path+"/"+f)
             cv2.imshow("no face" + f, image)
         print(retcs)
         cv2.waitKey(0)
