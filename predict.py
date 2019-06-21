@@ -127,24 +127,6 @@ def predict_image(path):
             elif  result[0] == 2:
                 name = "Toan"
         image_result = draw_rectange(box_news[i], image_result, name)
-        #cv2.imshow('Face recognition', image_copy)
         cv2.imwrite(path,image_result )
-        #cv2.waitKey(0)
-        #cv2.destroyAllWindows()
     K.clear_session()
-    #cv2.imshow('Face recognition', image_result)
-    #cv2.imwrite('./results/kq.jpg',image_copy )
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
     return image_result,name
-#        cv2.putText(image_copy, 'No face detection', (10, 20), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 0), 2)
-#        cv2.imshow('Face recognition', image_copy)
-#        cv2.waitKey(0)
-#        cv2.destroyAllWindows()
-
-#def main():
-#    path = 'dataset/predict/t6.jpg' #  update there
-#    predict_image(path)
-
-#if __name__=='__main__':
-#    main()
